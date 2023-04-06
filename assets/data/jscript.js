@@ -54,7 +54,7 @@ function getSemester() {
     }
 }
 
-function getClass(objSemester) {
+function getClass(objSemester, blnOpt) {
     // set variables
     var semesterId = objSemester.options[objSemester.selectedIndex].value;
     var aryClasses = eval(`ary${semesterId}`);
@@ -63,6 +63,12 @@ function getClass(objSemester) {
 
     // reset class list
     classId.length = 0;
+
+    // show 'Select a Class' if blnOpt is given true
+    blnOption = blnOpt;
+    // I chose to do this because although it would populate correctly in student.html, 
+    // class.html would put 'Select a Class' within the classList where we don't want it
+    // so I added the parameter to choose where we want to show 'Select a Class'
 
     if(blnOption) {
         // add a placeholder option
@@ -77,5 +83,24 @@ function getClass(objSemester) {
         option.value = aryClasses[x][0];
         option.text = aryClasses[x][1];
         classId.add(option);
+    }
+}
+
+function getStudent(objSemester) {
+    // set variables
+    var classSection = objSemester.options[objSemester.selectedIndex].value;
+    var aryClass = eval(`ary${classSection}`);
+    var studentId = document.getElementById('studentList');
+    var option = document.createElement('option');
+
+    // reset class list
+    studentId.length = 0;
+
+    //populate class list from array
+    for (x = 0; x < aryClass.length; x++) {
+        var option = document.createElement('option');
+        option.value = aryClass[x][0];
+        option.text = aryClass[x][1];
+        studentId.add(option);
     }
 }

@@ -15,12 +15,12 @@
             <table>
                 <tr>
                     <td colspan="5">
-                        <select id="semesterList" style="width:100%"></select>
+                        <select id="semesterList" style="width:100%" onchange="getClass(this, true)"></select>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="5">
-                        <select id="classList" style="width:100%"></select>
+                        <select id="classList" style="width:100%" onchange="getStudent(this)"></select>
                     </td>
                 </tr>
                 <tr>
@@ -54,8 +54,8 @@
                         >
                     </td>
                     <td style="text-align: right;">
-                        <button>Delete</button>
-                        <button>Add</button>
+                        <button onclick="deleteStudent()">Delete</button>
+                        <button onclick="addStudent()">Add</button>
                     </td>
                 </tr>
             </table>
@@ -67,6 +67,46 @@
 <script>
 
     getMenu();
+    getSemester();
+
+    function deleteStudent() {
+        // set variables
+        var studentIndex = document.getElementById("studentList").selectedIndex;
+        var sectionId = document.querySelector('#classList').selectedOptions[0].value;
+        var ary = eval(`ary${sectionId}`);
+
+        // validate that class is selected
+        if (studentIndex < 0) {
+            alert('Please select the student you want to delete.');
+            return;
+        }
+
+        // remove class from array and redisplay list
+        ary.splice(studentIndex, 1);
+        getStudent(document.getElementById('classList'));
+    }
+
+    function addStudent() {
+    // set up variables
+    var sectionId = document.querySelector('#classList').selectedOptions[0].value;
+    // another way of getting the semesterId
+    // var semesterId = document.getElementById('semesterList')[document.getElementById('semesterList').selectedIndex].value;
+    var MEID = document.getElementById('meid').value;
+    var firstName = document.getElementById('firstName').value;
+    var lastName = document.getElementById('lastName').value;
+    var ary = eval(`ary${sectionId}`);
+
+    // push new class to array
+    var newAry = ary.push([`${MEID}`,`${lastName} ${firstName}`]);
+
+    // reset input fields
+    document.getElementById('meid').value = '';
+    document.getElementById('firstName').value = '';
+    document.getElementById('lastName').value = '';
+
+    // reload page with new values
+    getStudent(document.getElementById('classList'));
+}
 
 </script>
 </html>
