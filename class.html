@@ -70,7 +70,7 @@
 
         // remove class from array and redisplay list
         ary.splice(classIndex, 1);
-        getClass(document.getElementById('semesterList'));
+        getClass(document.getElementById('semesterList', false));
     }
 
 function addClass() {
@@ -90,7 +90,7 @@ function addClass() {
     document.getElementById('sectionNumber').value = '';
 
     // reload page with new values
-    getClass(document.getElementById('semesterList'));
+    getClass(document.getElementById('semesterList', false));
 }
 
 </script>
